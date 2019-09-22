@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration
 class GrpcConfiguration {
 
     @Bean
-    fun start(customerService: ProductService) = ServerBuilder.forPort(5001)
-            .addService(customerService)
+    fun start(productService: ProductService) = ServerBuilder.forPort(5001)
+            .addService(productService)
             .build()
             .start()
 

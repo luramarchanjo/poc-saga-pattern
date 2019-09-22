@@ -1,15 +1,14 @@
 package com.example.stock.domain
 
-import com.example.customer.grpc.CustomerServiceGrpc
-import com.example.customer.grpc.ReserveCredit
-import com.example.customer.grpc.ReserveCreditResponse
+import com.example.stock.grpc.ProductServiceGrpc
+import com.example.stock.grpc.ReserveProductRequest
+import com.example.stock.grpc.ReserveProductResponse
 import io.grpc.stub.StreamObserver
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import java.lang.RuntimeException
 
 @Service
-class ProductService(val repository: ProductRepository) : CustomerServiceGrpc.CustomerServiceImplBase() {
+class ProductService(val repository: ProductRepository) : ProductServiceGrpc.ProductServiceImplBase() {
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
@@ -22,5 +21,9 @@ class ProductService(val repository: ProductRepository) : CustomerServiceGrpc.Cu
     }
 
     fun listAll() = repository.findAll()
+
+    override fun reserveProduct(request: ReserveProductRequest?, responseObserver: StreamObserver<ReserveProductResponse>?) {
+        super.reserveProduct(request, responseObserver)
+    }
 
 }
