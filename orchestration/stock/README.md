@@ -4,13 +4,6 @@
 
 docker run -d --name=postgres --net=host postgres:latest
 
-## Nats
-
-Run the command below
-~~~
-docker run -d --name=nats --net=host nats:latest
-~~~
-
 # Test
 
 ### Create Stock
