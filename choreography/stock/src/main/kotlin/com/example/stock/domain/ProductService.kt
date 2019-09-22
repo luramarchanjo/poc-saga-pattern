@@ -18,4 +18,25 @@ class ProductService(val repository: ProductRepository) {
 
     fun listAll() = repository.findAll()
 
+    fun reserveProduct(productId: String, quantity: Int): ProductStatus {
+        var response = ProductStatus.DENIED
+        val optional = repository.findById(productId)
+        if (optional.isPresent) {
+            val product = optional.get()
+            val currentQuantity = product.quantity
+            if (currentQuantity >= quantity) {
+                product.quantity -= quantity
+                repository.save(product)
+                response = ProductStatus.APPROVED
+                log.info("Product $productId quantity was APPROVED")
+            } else {
+                log.warn("Product $productId quantity was DENIED")
+            }
+        } else{
+            log.warn("Product $productId was not found")
+        }
+
+        return response
+    }
+
 }

@@ -26,11 +26,11 @@ class CustomerService(val repository: CustomerRepository) {
             val customer = optional.get()
             val currentCreditLimit = customer.creditLimit
 
-            if (currentCreditLimit <= value) {
+            if (currentCreditLimit >= value) {
                 customer.creditLimit -= value
                 customerStatus = CustomerStatus.APPROVED
                 repository.save(customer)
-                log.warn("Customer $customerId limit $value was approved")
+                log.info("Customer $customerId limit $value was approved")
             } else {
                 log.warn("Customer $customerId limit $value was denied")
             }
