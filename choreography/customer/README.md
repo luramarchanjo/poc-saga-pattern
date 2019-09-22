@@ -1,28 +1,31 @@
 # Setup
 
-## Postgres
+## Nats
 
-docker run -d --name=postgres --net=host postgres:latest
+Run the command below
+~~~
+docker run -d --name=nats --net=host nats:latest
+~~~
 
 # Test
 
-## Create Customer
+### Create Customer
 
-~~~~
-curl -X POST \
-  http://localhost:8081/v1/customers \
-  -H 'Content-Type: application/json' \
-  -d '{
-	"name" : "Luram Archanjo",
-	"creditLimit" : 1000
-}'
-~~~~
+~~~
+POST http://localhost:8081/v1/customers
+Accept: application/json
+Content-Type: application/json
 
-## List Customers
+{
+  "name" : "Luram Archanjo",
+  "creditLimit" : 1000
+}
+~~~
 
-~~~~
-curl -X GET \
-  http://localhost:8081/v1/customers \
-  -H 'Content-Type: application/json' \
-  -H 'cache-control: no-cache'
-~~~~
+### List Customers
+
+~~~
+GET http://localhost:8081/v1/customers
+Accept: application/json
+Content-Type: application/json
+~~~
