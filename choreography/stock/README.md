@@ -1,5 +1,9 @@
 # Setup
 
+## Postgres
+
+docker run -d --name=postgres --net=host postgres:latest
+
 ## Nats
 
 Run the command below

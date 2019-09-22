@@ -1,5 +1,9 @@
 # Setup
 
+## MongoDB
+
+docker run -d --name=mongo --net=host mongo:latest
+
 ## Nats
 
 Run the command below
