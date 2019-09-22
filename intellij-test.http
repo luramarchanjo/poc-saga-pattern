@@ -1,0 +1,58 @@
+### Create product
+
+POST http://localhost:8082/v1/products
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name" : "MC Donald's Big tasty",
+  "value" : 20,
+  "quantity" : 100
+}
+
+### List products
+
+GET http://localhost:8082/v1/products
+Accept: application/json
+Content-Type: application/json
+
+### Create customer
+
+POST http://localhost:8081/v1/customers
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name" : "Luram Archanjo",
+  "creditLimit" : 1000
+}
+
+### List customers
+
+GET http://localhost:8081/v1/customers
+Accept: application/json
+Content-Type: application/json
+
+####
+POST http://localhost:8080/v1/orders
+Accept: application/json
+Content-Type: application/json
+
+{
+  "customerId" : "eecfe3c9-30e8-474e-bd20-28d99d203f7c",
+  "products" : [
+    {
+      "id" : "3732093a-c299-4cba-a752-c24bd4024ea8",
+      "value" : 20,
+      "quantity" : 50
+    }
+  ]
+}
+
+###
+
+GET http://localhost:8080/v1/orders
+Accept: application/json
+Content-Type: application/json
+
+###
