@@ -10,15 +10,15 @@ class OrderService(val orderRepository: OrderRepository, val customerService: Cu
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
-    fun create(customerId: String, value: Double): Order {
-        val order = Order(customerId, OrderStatus.PENDING, value)
+    fun create(customerId: String, products : List<Product>): Order {
+        val order = Order(customerId, OrderStatus.PENDING, products)
         log.info("Creating $order")
         orderRepository.save(order)
         log.info("Created $order")
 
         val reserveCredit = customerService.reserveCredit(ReserveCredit.newBuilder()
                 .setCustomerId(order.customerId)
-                .setValue(order.value)
+                .setValue(order.getValue())
                 .build())
 
         val orderStatus = OrderStatus.valueOf(reserveCredit.response)
