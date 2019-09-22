@@ -12,10 +12,16 @@ class NatsConfigurations {
     @Bean
     fun createConnection() = Nats.connect()
 
-    @Bean
-    fun createDispatcher(connection: Connection, reserveCreditMessageHandler: ReserveCreditMessageHandler): Dispatcher {
-        val dispatcher = connection.createDispatcher(reserveCreditMessageHandler)
+    @Bean("ReserveCreditDispacher")
+    fun createReserveCreditDispacher(connection: Connection, messageHandler: ReserveCreditMessageHandler): Dispatcher {
+        val dispatcher = connection.createDispatcher(messageHandler)
         return dispatcher.subscribe("customer-reserve-credit")
+    }
+
+    @Bean("AddCreditDispacher")
+    fun createAddCreditDispacher(connection: Connection, messageHandler: AddCreditMessageHandler): Dispatcher {
+        val dispatcher = connection.createDispatcher(messageHandler)
+        return dispatcher.subscribe("customer-add-credit")
     }
 
 }
