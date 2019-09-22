@@ -23,7 +23,30 @@ class ProductService(val repository: ProductRepository) : ProductServiceGrpc.Pro
     fun listAll() = repository.findAll()
 
     override fun reserveProduct(request: ReserveProductRequest?, responseObserver: StreamObserver<ReserveProductResponse>?) {
-        super.reserveProduct(request, responseObserver)
+        try {
+            val optional = repository.findById(request?.productId ?: "")
+            if (optional.isPresent && request != null && responseObserver != null) {
+                val product = optional.get()
+                val quantity = product.quantity
+                var response : String?
+
+                if (quantity >= request.quantity) {
+                    product.quantity -= request.quantity
+                    repository.save(product)
+                    response = ProductStatus.APPROVED.name
+                } else {
+                    response = ProductStatus.DENIED.name
+                }
+
+                responseObserver.onNext(ReserveProductResponse.newBuilder()
+                        .setResponse(response)
+                        .build())
+            } else {
+                responseObserver?.onError(RuntimeException("Product ${request?.productId} not found"))
+            }
+        } finally {
+            responseObserver?.onCompleted()
+        }
     }
 
 }

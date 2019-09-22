@@ -15,8 +15,23 @@ message ReserveCreditResponse {
 
 }
 
+message AddCreditRequest {
+
+  string customerId = 1;
+  double value = 2;
+
+}
+
+message AddCreditResponse {
+
+  string response = 1;
+
+}
+
 service CustomerService {
 
   rpc reserveCredit (ReserveCredit) returns (ReserveCreditResponse);
+
+  rpc addCredit (AddCreditRequest) returns (AddCreditResponse);
 
 }
