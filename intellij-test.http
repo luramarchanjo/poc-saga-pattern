@@ -33,7 +33,8 @@ GET http://localhost:8081/v1/customers
 Accept: application/json
 Content-Type: application/json
 
-####
+#### Create Order
+
 POST http://localhost:8080/v1/orders
 Accept: application/json
 Content-Type: application/json
@@ -49,10 +50,8 @@ Content-Type: application/json
   ]
 }
 
-###
+### List Orders
 
 GET http://localhost:8080/v1/orders
 Accept: application/json
 Content-Type: application/json
-
-###

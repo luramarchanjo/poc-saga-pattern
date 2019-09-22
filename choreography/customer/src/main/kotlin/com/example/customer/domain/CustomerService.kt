@@ -18,4 +18,27 @@ class CustomerService(val repository: CustomerRepository) {
 
     fun listAll() = repository.findAll()
 
+    fun reserveCredit(customerId: String, value: Double) : CustomerStatus {
+        var customerStatus = CustomerStatus.DENIED
+
+        val optional = repository.findById(customerId)
+        if (optional.isPresent) {
+            val customer = optional.get()
+            val currentCreditLimit = customer.creditLimit
+
+            if (currentCreditLimit <= value) {
+                customer.creditLimit -= value
+                customerStatus = CustomerStatus.APPROVED
+                repository.save(customer)
+                log.warn("Customer $customerId limit $value was approved")
+            } else {
+                log.warn("Customer $customerId limit $value was denied")
+            }
+        } else {
+            log.warn("Customer $customerId was not found")
+        }
+
+        return customerStatus
+    }
+
 }
